@@ -110,7 +110,7 @@ export const enhancePrompt = (userPrompt, language, framework, styling) => {
  */
 export const generateCode = async (userPrompt, language, framework = 'none', styling = 'css') => {
   try {
-    // Use Gemini 1.5 Pro model
+    // Use Gemini 2.5 Flash model
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     // Enhance the prompt
