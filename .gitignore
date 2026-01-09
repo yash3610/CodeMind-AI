@@ -3,12 +3,14 @@ node_modules/
 .pnp
 .pnp.js
 
-# Environment variables
+# Environment variables - NEVER commit these!
 .env
 .env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env.production
+.env.development
+.env.test
+backend/.env
+frontend/.env
 
 # Testing
 coverage/
@@ -34,3 +36,9 @@ yarn-error.log*
 # Database
 *.sqlite
 *.db
+
+# API Keys and Secrets
+*.key
+*.pem
+config/secrets.js
+secrets/
