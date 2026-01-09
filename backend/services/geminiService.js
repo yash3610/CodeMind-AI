@@ -21,10 +21,10 @@ export const enhancePrompt = (userPrompt, language, framework, styling) => {
   enhancedPrompt += `generate clean, production-ready, well-commented code for the following requirement:\n\n${userPrompt}\n\n`;
 
   // Add specific instructions based on language
-  switch (language.toLowerCase()) {
+  switch (language. toLowerCase()) {
     case 'html':
       enhancedPrompt += `
-        Requirements:
+        Requirements: 
         - Use semantic HTML5 elements
         - Include proper meta tags
         - Make it responsive
@@ -86,7 +86,7 @@ export const enhancePrompt = (userPrompt, language, framework, styling) => {
       `;
       break;
 
-    case 'c':
+    case 'c': 
       enhancedPrompt += `
         Requirements:
         - Include necessary headers
@@ -99,7 +99,7 @@ export const enhancePrompt = (userPrompt, language, framework, styling) => {
       break;
 
     default:
-      enhancedPrompt += '- Return only the code, no explanations or markdown formatting.';
+      enhancedPrompt += '- Return only the code, no explanations or markdown formatting. ';
   }
 
   return enhancedPrompt;
@@ -110,14 +110,14 @@ export const enhancePrompt = (userPrompt, language, framework, styling) => {
  */
 export const generateCode = async (userPrompt, language, framework = 'none', styling = 'css') => {
   try {
-    // Use Gemini 1.5 Pro model
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro-latest' });
+    // Use Gemini 2.5 Flash model - UPDATED ✅
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     // Enhance the prompt
     const enhancedPrompt = enhancePrompt(userPrompt, language, framework, styling);
 
     // Generate content
-    const result = await model.generateContent(enhancedPrompt);
+    const result = await model. generateContent(enhancedPrompt);
     const response = await result.response;
     let generatedCode = response.text();
 
@@ -140,11 +140,12 @@ export const generateCode = async (userPrompt, language, framework = 'none', sty
  */
 export const fixCode = async (code, errorMessage, language) => {
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro-latest' });
+    // Use Gemini 2.5 Flash model - UPDATED ✅
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-    const prompt = `You are an expert ${language} debugger. The following code has an error:
+    const prompt = `You are an expert ${language} debugger. The following code has an error: 
 
-CODE:
+CODE: 
 \`\`\`${language}
 ${code}
 \`\`\`
@@ -152,7 +153,7 @@ ${code}
 ERROR:
 ${errorMessage}
 
-Please analyze the error and provide the corrected code. Return ONLY the fixed code without any explanations, markdown formatting, or additional text.`;
+Please analyze the error and provide the corrected code.  Return ONLY the fixed code without any explanations, markdown formatting, or additional text.`;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
@@ -167,17 +168,17 @@ Please analyze the error and provide the corrected code. Return ONLY the fixed c
   } catch (error) {
     console.error('Gemini Fix Code Error:', error);
     
-    if (error.message?.includes('API key') || error.status === 400) {
+    if (error.message?. includes('API key') || error.status === 400) {
       console.log('⚠️  Using Mock Code Fixer (Gemini API not configured)');
       const { MockCodeGenerator } = await import('../utils/mockCodeGen.js');
       return {
         success: true,
         code: MockCodeGenerator.fixCode(code, errorMessage),
-        warning: 'Using demo fix. Configure Gemini API key for AI-powered fixes.',
+        warning: 'Using demo fix.  Configure Gemini API key for AI-powered fixes.',
       };
     }
     
-    throw new Error(`Failed to fix code: ${error.message}`);
+    throw new Error(`Failed to fix code: ${error. message}`);
   }
 };
 
@@ -186,9 +187,10 @@ Please analyze the error and provide the corrected code. Return ONLY the fixed c
  */
 export const explainCode = async (code, language) => {
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro-latest' });
+    // Use Gemini 2.5 Flash model - UPDATED ✅
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-    const prompt = `You are an expert ${language} developer. Explain the following code in a clear, concise manner. Include:
+    const prompt = `You are an expert ${language} developer. Explain the following code in a clear, concise manner.  Include: 
 1. What the code does (overview)
 2. How it works (step-by-step)
 3. Key concepts or patterns used
@@ -202,7 +204,7 @@ ${code}
 Provide a well-structured explanation that a developer can easily understand.`;
 
     const result = await model.generateContent(prompt);
-    const response = await result.response;
+    const response = await result. response;
     const explanation = response.text();
 
     return {
@@ -231,9 +233,10 @@ Provide a well-structured explanation that a developer can easily understand.`;
  */
 export const optimizeCode = async (code, language) => {
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro-latest' });
+    // Use Gemini 2.5 Flash model - UPDATED ✅
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-    const prompt = `You are an expert ${language} developer specializing in code optimization. Analyze and optimize the following code for:
+    const prompt = `You are an expert ${language} developer specializing in code optimization. Analyze and optimize the following code for: 
 - Performance improvements
 - Better readability
 - Best practices
@@ -262,10 +265,10 @@ Return ONLY the optimized code without explanations or markdown formatting.`;
     
     if (error.message?.includes('API key') || error.status === 400) {
       console.log('⚠️  Using Mock Code Optimizer (Gemini API not configured)');
-      const { MockCodeGenerator } = await import('../utils/mockCodeGen.js');
+      const { MockCodeGenerator } = await import('../utils/mockCodeGen. js');
       return {
         success: true,
-        code: MockCodeGenerator.optimizeCode(code),
+        code:  MockCodeGenerator.optimizeCode(code),
         warning: 'Using demo optimization. Configure Gemini API key for AI-powered optimization.',
       };
     }
@@ -279,12 +282,13 @@ Return ONLY the optimized code without explanations or markdown formatting.`;
  */
 export const convertCode = async (code, fromLanguage, toLanguage) => {
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-pro-latest' });
+    // Use Gemini 2.5 Flash model - UPDATED ✅
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-    const prompt = `You are an expert programmer. Convert the following ${fromLanguage} code to ${toLanguage}. 
-Maintain the same functionality and logic. Use ${toLanguage} best practices and idioms.
+    const prompt = `You are an expert programmer.  Convert the following ${fromLanguage} code to ${toLanguage}.  
+Maintain the same functionality and logic.  Use ${toLanguage} best practices and idioms. 
 
-ORIGINAL ${fromLanguage.toUpperCase()} CODE:
+ORIGINAL ${fromLanguage. toUpperCase()} CODE:
 \`\`\`${fromLanguage}
 ${code}
 \`\`\`
@@ -309,7 +313,7 @@ Return ONLY the converted ${toLanguage} code without explanations or markdown fo
       const { MockCodeGenerator } = await import('../utils/mockCodeGen.js');
       return {
         success: true,
-        code: MockCodeGenerator.convertCode(code, toLanguage),
+        code: MockCodeGenerator. convertCode(code, toLanguage),
         warning: 'Using demo conversion. Configure Gemini API key for AI-powered conversion.',
       };
     }
@@ -323,7 +327,7 @@ Return ONLY the converted ${toLanguage} code without explanations or markdown fo
  */
 const cleanCodeResponse = (code) => {
   // Remove markdown code blocks (```language and ```)
-  let cleaned = code.replace(/```[\w]*\n/g, '').replace(/```$/g, '').trim();
+  let cleaned = code. replace(/```[\w]*\n/g, '').replace(/```$/g, '').trim();
   
   // Remove any leading/trailing whitespace
   cleaned = cleaned.trim();
