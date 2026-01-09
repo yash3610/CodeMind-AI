@@ -24,7 +24,7 @@ export const enhancePrompt = (userPrompt, language, framework, styling) => {
   switch (language. toLowerCase()) {
     case 'html':
       enhancedPrompt += `
-        Requirements: 
+        Requirements:
         - Use semantic HTML5 elements
         - Include proper meta tags
         - Make it responsive
@@ -74,7 +74,7 @@ export const enhancePrompt = (userPrompt, language, framework, styling) => {
       `;
       break;
 
-    case 'java':
+    case 'java': 
       enhancedPrompt += `
         Requirements:
         - Follow Java naming conventions
@@ -110,14 +110,14 @@ export const enhancePrompt = (userPrompt, language, framework, styling) => {
  */
 export const generateCode = async (userPrompt, language, framework = 'none', styling = 'css') => {
   try {
-    // Use Gemini 2.5 Flash model - UPDATED ✅
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+    // Use Gemini 2.5 Flash model
+    const model = genAI. getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     // Enhance the prompt
     const enhancedPrompt = enhancePrompt(userPrompt, language, framework, styling);
 
     // Generate content
-    const result = await model. generateContent(enhancedPrompt);
+    const result = await model.generateContent(enhancedPrompt);
     const response = await result.response;
     let generatedCode = response.text();
 
@@ -140,12 +140,11 @@ export const generateCode = async (userPrompt, language, framework = 'none', sty
  */
 export const fixCode = async (code, errorMessage, language) => {
   try {
-    // Use Gemini 2.5 Flash model - UPDATED ✅
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const prompt = `You are an expert ${language} debugger. The following code has an error: 
 
-CODE: 
+CODE:
 \`\`\`${language}
 ${code}
 \`\`\`
@@ -178,7 +177,7 @@ Please analyze the error and provide the corrected code.  Return ONLY the fixed 
       };
     }
     
-    throw new Error(`Failed to fix code: ${error. message}`);
+    throw new Error(`Failed to fix code: ${error.message}`);
   }
 };
 
@@ -187,7 +186,6 @@ Please analyze the error and provide the corrected code.  Return ONLY the fixed 
  */
 export const explainCode = async (code, language) => {
   try {
-    // Use Gemini 2.5 Flash model - UPDATED ✅
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const prompt = `You are an expert ${language} developer. Explain the following code in a clear, concise manner.  Include: 
@@ -233,7 +231,6 @@ Provide a well-structured explanation that a developer can easily understand.`;
  */
 export const optimizeCode = async (code, language) => {
   try {
-    // Use Gemini 2.5 Flash model - UPDATED ✅
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const prompt = `You are an expert ${language} developer specializing in code optimization. Analyze and optimize the following code for: 
@@ -282,7 +279,6 @@ Return ONLY the optimized code without explanations or markdown formatting.`;
  */
 export const convertCode = async (code, fromLanguage, toLanguage) => {
   try {
-    // Use Gemini 2.5 Flash model - UPDATED ✅
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
     const prompt = `You are an expert programmer.  Convert the following ${fromLanguage} code to ${toLanguage}.  
